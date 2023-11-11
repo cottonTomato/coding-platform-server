@@ -4,11 +4,9 @@ import { HttpModule } from '@nestjs/axios';
 import { Judge0Service } from './judge0/judge0.service';
 import { SubmissionsController } from './submissions.controller';
 import { SubmitService } from './submit/submit.service';
-import { TestCodeService } from './test-code/test-code.service';
-import { CustomTestService } from './custom-test/custom-test.service';
 
 @Module({
-  providers: [Judge0Service, SubmitService, TestCodeService, CustomTestService],
+  providers: [Judge0Service, SubmitService],
   imports: [
     ConfigModule.forRoot(),
     HttpModule.registerAsync({

@@ -1,26 +1,13 @@
-import { Controller, Sse } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { Controller, Post } from '@nestjs/common';
 
 @Controller('submissions')
 export class SubmissionsController {
-  @Sse('/submit')
-  submit() {
-    return new Observable((subscriber) => {
-      subscriber.next({ status: 'Recieved' });
-    });
-  }
+  @Post('/submit')
+  submit() {}
 
-  @Sse('/sample')
-  testSample() {
-    return new Observable((subscriber) => {
-      subscriber.next({ status: 'Recieved' });
-    });
-  }
+  @Post('/sample-test')
+  testAgainstSample() {}
 
-  @Sse('/custom')
-  customTest() {
-    return new Observable((subscriber) => {
-      subscriber.next({ status: 'Recieved' });
-    });
-  }
+  @Post('/custom-test')
+  testAgainstCustom() {}
 }

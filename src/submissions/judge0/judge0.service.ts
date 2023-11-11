@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { catchError, lastValueFrom, map } from 'rxjs';
-import { CreateSubmissionDTO } from '../interfaces/submissions.dto';
+import { CreateSubmissionDTO } from '../../common/interfaces/submissions.dto';
+import {
+  SubmissionFailed,
+  SubmissionRetrievalFailed,
+} from 'src/common/exceptions';
 
 @Injectable()
 export class Judge0Service {
@@ -11,11 +15,11 @@ export class Judge0Service {
     token: string;
   }> {
     const response = this.http
-      .post('?wait=true', submission)
+      .post('/', submission)
       .pipe(map((res) => res.data))
       .pipe(
         catchError((_) => {
-          throw new Error('Submission To Judge0 Service Failed');
+          throw new SubmissionFailed();
         }),
       );
 
@@ -28,7 +32,24 @@ export class Judge0Service {
       .pipe(map((res) => res.data))
       .pipe(
         catchError((_) => {
-          throw new Error('Retrieval of Submission Failed');
+          throw new SubmissionRetrievalFailed();
+        }),
+      );
+
+    return lastValueFrom(response);
+  }
+
+  getAllUserSubmissions(tokens: string[]) {
+    const response = this.http
+      .get('/batch', {
+        params: {
+          tokens,
+        },
+      })
+      .pipe(map((res) => res.data))
+      .pipe(
+        catchError((_) => {
+          throw new SubmissionRetrievalFailed();
         }),
       );
 
