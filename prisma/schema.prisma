@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String       @id @default(uuid())
+  email    String       @unique
+  password String
+  isAdmin  Boolean      @default(false)
+  profile  UserProfile?
+}
+
+model UserProfile {
+  user                  User            @relation(fields: [id], references: [id])
+  id                    String          @unique
+  discordId             String          @unique
+  cumulativeScore       Int             @default(0)
+  nParticipatedContests Int             @default(0)
+  contests              UserInContest[]
+}
+
+model Contest {
+  id            Int             @id @default(autoincrement())
+  date          DateTime        @default(now()) @db.Date
+  nQuestions    Int
+  nParticipants Int
+  contestants   UserInContest[]
+  submissions   Submission[]
+}
+
+model UserInContest {
+  contestant         UserProfile  @relation(fields: [contestantId], references: [id])
+  contestantId       String       @unique
+  contest            Contest      @relation(fields: [contestId], references: [id])
+  contestId          Int          @unique
+  nQuestionsSolved   Int
+  questionsSolved    Int[]
+  questionSolvedTime DateTime
+  submissions        Submission[]
+
+  @@id([contestantId, contestId])
+}
+
+model Submission {
+  id          String           @id @default(uuid())
+  submitter   UserInContest    @relation(fields: [submitterId], references: [contestantId])
+  submitterId String
+  contest     Contest          @relation(fields: [contestId], references: [id])
+  contestId   Int
+  isPassed    Boolean          @default(false)
+  status      SubmissionStatus @default(UNKOWN)
+  submittedAt DateTime         @default(now())
+}
+
+enum SubmissionStatus {
+  PASSED
+  COMPILATION_ERROR
+  RUNTIME_ERROR
+  WRONG_ANSWER
+  UNKOWN
+}
