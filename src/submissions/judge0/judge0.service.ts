@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { catchError, lastValueFrom, map } from 'rxjs';
-import { CreateSubmissionDTO } from '../../common/interfaces/submissions.dto';
-import {
-  SubmissionFailed,
-  SubmissionRetrievalFailed,
-} from '../../common/exceptions';
+import { CreateSubmissionDTO } from '../dto/create-submission.dto';
+import { SubmissionFailed, SubmissionRetrievalFailed } from '../exceptions';
 
 @Injectable()
 export class Judge0Service {

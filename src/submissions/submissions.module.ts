@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 import { Judge0Service } from './judge0/judge0.service';
 import { SubmissionsController } from './submissions.controller';
@@ -9,11 +9,9 @@ import { ResultGateway } from './result-gateway/result-gateway.gateway';
 @Module({
   providers: [Judge0Service, SubmitService, ResultGateway],
   imports: [
-    ConfigModule.forRoot(),
     HttpModule.registerAsync({
-      imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (config: ConfigService) => ({
+      useFactory: (config: ConfigService) => ({
         baseURL: config.get<string>('JUDGE0_URI') + '/submissions',
         headers: {
           'Content-Type': 'application/json',
@@ -25,6 +23,7 @@ import { ResultGateway } from './result-gateway/result-gateway.gateway';
       }),
     }),
   ],
+  exports: [Judge0Service],
   controllers: [SubmissionsController],
 })
 export class SubmissionsModule {}
