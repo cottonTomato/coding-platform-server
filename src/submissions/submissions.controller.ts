@@ -1,13 +1,16 @@
 import { Controller, Post } from '@nestjs/common';
+import { SubmitService } from './submit-service/submit.service';
 
 @Controller('submissions')
 export class SubmissionsController {
+  constructor(private readonly submitService: SubmitService) {}
+
   @Post('/submit')
   submit() {}
 
   @Post('/sample-test')
-  testAgainstSample() {}
+  testSample() {}
 
   @Post('/custom-test')
-  testAgainstCustom() {}
+  testCustom() {}
 }

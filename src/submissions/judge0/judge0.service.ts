@@ -5,7 +5,7 @@ import { CreateSubmissionDTO } from '../../common/interfaces/submissions.dto';
 import {
   SubmissionFailed,
   SubmissionRetrievalFailed,
-} from 'src/common/exceptions';
+} from '../../common/exceptions';
 
 @Injectable()
 export class Judge0Service {
