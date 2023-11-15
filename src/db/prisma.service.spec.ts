@@ -15,4 +15,9 @@ describe('PrismaService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('is Alive', async () => {
+    const output = await service.$executeRaw`SELECT 1`;
+    expect(output).toBe(1);
+  });
 });

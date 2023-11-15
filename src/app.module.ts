@@ -4,7 +4,9 @@ import { SubmissionsModule } from './submissions/submissions.module';
 import { AuthModule } from './auth/auth.module';
 import { LeaderboardModule } from './leaderboard/leaderboard.module';
 import { ProblemsModule } from './problems/problems.module';
-import { PrismaService } from './prisma-service/prisma.service';
+import { ContestantModule } from './contestant/contestant.module';
+import { UserModule } from './user/user.module';
+import { DbModule } from './db/db.module';
 
 @Module({
   imports: [
@@ -15,8 +17,10 @@ import { PrismaService } from './prisma-service/prisma.service';
       isGlobal: true,
     }),
     ProblemsModule,
+    ContestantModule,
+    UserModule,
+    DbModule,
   ],
-  providers: [PrismaService],
-  exports: [PrismaService],
+  exports: [DbModule],
 })
 export class AppModule {}

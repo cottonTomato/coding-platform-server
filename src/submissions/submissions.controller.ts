@@ -3,7 +3,7 @@ import { SubmitService } from './submit-service/submit.service';
 
 @Controller('submissions')
 export class SubmissionsController {
-  constructor(private readonly submitService: SubmitService) {}
+  constructor(private readonly submitHandler: SubmitService) {}
 
   @Post('/submit')
   submit() {}
