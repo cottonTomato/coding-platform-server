@@ -48,10 +48,10 @@ model UserInContest {
 }
 
 model Submission {
-  id          String           @id @default(uuid())
   submitter   UserInContest    @relation(fields: [submitterId, contestId], references: [contestantId, contestId])
   submitterId String
   contestId   Int
+  token       String           @id
   isPassed    Boolean          @default(false)
   status      SubmissionStatus @default(UNKNOWN)
   submittedAt DateTime         @default(now())

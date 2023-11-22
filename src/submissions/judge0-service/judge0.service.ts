@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { catchError, lastValueFrom, map } from 'rxjs';
-import { CreateSubmissionDTO } from '../dto/create-submission.dto';
+import { CreateSubmissionDTO } from '../dto/submission.dto';
 import { SubmissionFailed, SubmissionRetrievalFailed } from '../exceptions';
 
 @Injectable()
@@ -25,7 +25,19 @@ export class Judge0Service {
 
   getSubmission(token: string) {
     const response = this.http
-      .get(`/${token}`)
+      .get(`/${token}`, {
+        params: {
+          fields: [
+            'token',
+            'compiler_output',
+            'exit_code',
+            'stderr',
+            'status',
+            'time',
+            'memory',
+          ],
+        },
+      })
       .pipe(map((res) => res.data))
       .pipe(
         catchError((_) => {
@@ -41,6 +53,15 @@ export class Judge0Service {
       .get('/batch', {
         params: {
           tokens,
+          fields: [
+            'token',
+            'compiler_output',
+            'exit_code',
+            'stderr',
+            'status',
+            'time',
+            'memory',
+          ],
         },
       })
       .pipe(map((res) => res.data))

@@ -5,19 +5,13 @@ import { DbModule } from '../../db/db.module';
 import { SubmissionService } from '../submission-service/submission.service';
 import { SubmitService } from './submit.service';
 import { Judge0Service } from '../judge0-service/judge0.service';
-import { ResultGateway } from '../result-gateway/result.gateway';
 
 describe('SubmitService', () => {
   let service: SubmitService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        Judge0Service,
-        SubmitService,
-        ResultGateway,
-        SubmissionService,
-      ],
+      providers: [Judge0Service, SubmitService, SubmissionService],
       imports: [
         HttpModule.registerAsync({
           imports: [ConfigModule.forRoot()],

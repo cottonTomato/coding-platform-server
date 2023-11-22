@@ -3,7 +3,6 @@ import { HttpModule } from '@nestjs/axios';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DbModule } from '../db/db.module';
 import { Judge0Service } from './judge0-service/judge0.service';
-import { ResultGateway } from './result-gateway/result.gateway';
 import { SubmissionService } from './submission-service/submission.service';
 import { SubmissionsController } from './submissions.controller';
 import { SubmitService } from './submit-service/submit.service';
@@ -13,12 +12,7 @@ describe('SubmissionsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        Judge0Service,
-        SubmitService,
-        ResultGateway,
-        SubmissionService,
-      ],
+      providers: [Judge0Service, SubmitService, SubmissionService],
       imports: [
         HttpModule.registerAsync({
           imports: [ConfigModule.forRoot()],

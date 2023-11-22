@@ -5,11 +5,11 @@ import { ConfigService } from '@nestjs/config';
 import { SubmissionsController } from './submissions.controller';
 import { SubmitService } from './submit-service/submit.service';
 import { Judge0Service } from './judge0-service/judge0.service';
-import { ResultGateway } from './result-gateway/result.gateway';
 import { SubmissionService } from './submission-service/submission.service';
+import { SseService } from './sse/sse.service';
 
 @Module({
-  providers: [Judge0Service, SubmitService, ResultGateway, SubmissionService],
+  providers: [Judge0Service, SubmitService, SubmissionService, SseService],
   imports: [
     HttpModule.registerAsync({
       inject: [ConfigService],
